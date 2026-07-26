@@ -1,0 +1,67 @@
+= Sakshi SDK AIDL IPC Specification
+Rajnish Kumar <RajnishKMehta@proton.me>
+v1.0.0-beta.1, 2026-07-26
+:description: AIDL interface contracts and IPC specification for the Sakshi SDK.
+:keywords: sakshi, sdk, aidl, ipc, binder, bundle, serialization
+:toc: left
+:toclevels: 3
+:icons: font
+:source-highlighter: highlight.js
+
+== 1. Service Binding Configuration
+
+[cols="1,2", options="header"]
+|===
+| Parameter | Value
+| **Intent Action** | `rajnishkmehta.sakshi.vault.BIND_VAULT_SERVICE`
+| **Default Package** | `rajnishkmehta.sakshi.vault`
+| **IPC Protocol** | Android AIDL / IBinder Transaction
+|===
+
+== 2. AIDL Interface Contracts
+
+=== 2.1 `ISakshiVaultService.aidl`
+
+[source,aidl]
+----
+package rajnishkmehta.sakshi.sdk.internal.ipc;
+
+import android.os.Bundle;
+import rajnishkmehta.sakshi.sdk.internal.ipc.ISakshiVaultCallback;
+
+interface ISakshiVaultService {
+    Bundle ping(in Bundle requestBundle);
+    void sendPhoto(in Bundle photoBundle, in ISakshiVaultCallback callback);
+    void startVideoSync(in Bundle videoSyncBundle, in ISakshiVaultCallback callback);
+    void stopVideoSync(in String fileId, in ISakshiVaultCallback callback);
+    Bundle isRecordingSynced(in String fileId);
+}
+----
+
+=== 2.2 `ISakshiVaultCallback.aidl`
+
+[source,aidl]
+----
+package rajnishkmehta.sakshi.sdk.internal.ipc;
+
+import android.os.Bundle;
+
+interface ISakshiVaultCallback {
+    void onPhotoAck(in Bundle responseBundle);
+    void onVideoSyncStatus(in Bundle syncStatusBundle);
+    void onCopyDone(in Bundle copyDoneBundle);
+    void onError(in Bundle errorBundle);
+}
+----
+
+== 3. Bundle Data Structures
+
+=== 3.1 `CopyDoneAck` Bundle Keys
+[cols="1,1,2", options="header"]
+|===
+| Key | Type | Description
+| `file_id` | String | Unique recording file identifier.
+| `vault_uri` | String (Optional) | Content URI of copied file in Vault storage.
+| `total_bytes` | Long | Total number of bytes copied.
+| `timestamp` | Long | Completion epoch timestamp in milliseconds.
+|===
