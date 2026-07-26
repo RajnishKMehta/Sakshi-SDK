@@ -82,9 +82,7 @@ jobs:
         run: |
           ./gradlew \
             :sakshi-sdk:check \
-            :sakshi-sdk:assembleRelease \
-            :sakshi-sdk:sourcesJar \
-            :sakshi-sdk:javadocJar
+            :sakshi-sdk:assembleRelease
 
       # Publish
       - name: Publish to GitHub Packages & Maven Central
