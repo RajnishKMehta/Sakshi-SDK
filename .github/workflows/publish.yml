@@ -70,13 +70,6 @@ jobs:
           git tag "${{ inputs.tag }}"
           git push origin "${{ inputs.tag }}"
 
-      # Import GPG Key
-      - name: Import GPG Key
-        uses: crazy-max/ghaction-import-gpg@v7
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
-
       # Build SDK
       - name: Build Release Artifacts
         run: |
