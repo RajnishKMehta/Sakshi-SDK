@@ -69,7 +69,7 @@ mavenPublishing {
 
     pom {
         name.set("Sakshi SDK")
-        description.set("Secure Android IPC SDK for transferring photos, videos, metadata, and files between apps and Sakshi Vault.")
+        description.set("Official Android SDK for building secure integrations with the Sakshi ecosystem through a modern IPC communication layer.")
         url.set("https://github.com/RajnishKMehta/sakshi-sdk")
 
         licenses {
