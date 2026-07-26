@@ -1,6 +1,10 @@
+import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.SourcesJar
+
 plugins {
     alias(libs.plugins.android.library)
-    `maven-publish`
+    alias(libs.plugins.maven.publish)
 }
 
 android {
@@ -34,13 +38,6 @@ android {
     buildFeatures {
         aidl = true
     }
-
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
 }
 
 kotlin {
@@ -58,43 +55,52 @@ dependencies {
     implementation(libs.androidx.core.ktx)
 }
 
+mavenPublishing {
+    coordinates("rajnishkmehta.sakshi", "sakshi-sdk", libs.versions.sakshi.sdk.get())
+
+    publishToMavenCentral(automaticRelease = true)
+    signAllPublications()
+
+    configure(AndroidSingleVariantLibrary(
+        javadocJar = JavadocJar.Empty(),
+        sourcesJar = SourcesJar.Sources(),
+        variant = "release"
+    ))
+
+    pom {
+        name.set("Sakshi SDK")
+        description.set("Lightweight Android IPC SDK for communication with Sakshi Vault application.")
+        url.set("https://github.com/RajnishKMehta/sakshi-sdk")
+
+        licenses {
+            license {
+                name.set("Apache License, Version 2.0")
+                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+
+        developers {
+            developer {
+                id.set("rajnishkmehta")
+                name.set("Rajnish")
+                email.set("RajnishKMehta@proton.me")
+            }
+        }
+
+        scm {
+            connection.set("scm:git:github.com/RajnishKMehta/sakshi-sdk.git")
+            developerConnection.set("scm:git:ssh://github.com/RajnishKMehta/sakshi-sdk.git")
+            url.set("https://github.com/RajnishKMehta/sakshi-sdk")
+        }
+    }
+}
+
 publishing {
-    publications {
-        register<MavenPublication>("release") {
-            groupId = "rajnishkmehta.sakshi"
-            artifactId = "sakshi-sdk"
-            version = libs.versions.sakshi.sdk.get()
-
-            afterEvaluate {
-                from(components["release"])
-            }
-
-            pom {
-                name.set("Sakshi SDK")
-                description.set("Lightweight Android IPC SDK for communication with Sakshi Vault application.")
-                url.set("https://github.com/RajnishKMehta/sakshi-sdk")
-
-                licenses {
-                    license {
-                        name.set("Apache License, Version 2.0")
-                        url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
-                    }
-                }
-
-                developers {
-                    developer {
-                        id.set("rajnishkmehta")
-                        name.set("Rajnish")
-                        email.set("RajnishKMehta@proton.me")
-                    }
-                }
-
-                scm {
-                    connection.set("scm:git:github.com/RajnishKMehta/sakshi-sdk.git")
-                    developerConnection.set("scm:git:ssh://github.com/RajnishKMehta/sakshi-sdk.git")
-                    url.set("https://github.com/RajnishKMehta/sakshi-sdk")
-                }
-            }
+    repositories {
+        maven {
+            name = "githubPackages"
+            url = uri("https://maven.pkg.github.com/RajnishKMehta/sakshi-sdk")
+            credentials(PasswordCredentials::class)
         }
     }
 }

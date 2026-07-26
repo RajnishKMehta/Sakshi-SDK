@@ -14,3 +14,4 @@ androidx-annotation = { module = "androidx.annotation:annotation", version.ref =
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "agp" }
+maven-publish = { id = "com.vanniktech.maven.publish", version = "0.37.0" }

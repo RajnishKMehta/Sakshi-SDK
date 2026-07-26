@@ -87,15 +87,16 @@ jobs:
       # Publish
       - name: Publish to GitHub Packages & Maven Central
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MAVEN_CENTRAL_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          MAVEN_CENTRAL_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}
+          ORG_GRADLE_PROJECT_githubPackagesUsername: ${{ github.actor }}
+          ORG_GRADLE_PROJECT_githubPackagesPassword: ${{ secrets.GITHUB_TOKEN }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_PRIVATE_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSPHRASE }}
         run: |
-          ./gradlew :sakshi-sdk:publish \
-            -Dgpr.user=${{ github.actor }} \
-            -Dgpr.key=${{ secrets.GITHUB_TOKEN }}
+          ./gradlew \
+            :sakshi-sdk:publishAllPublicationsToGithubPackagesRepository \
+            :sakshi-sdk:publishAndReleaseToMavenCentral
 
       # Create GitHub Release
       - name: Create GitHub Release
