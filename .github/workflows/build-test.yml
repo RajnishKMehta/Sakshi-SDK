@@ -43,6 +43,10 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
 
+      # make gradlew executable
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
       # Build, lint and run all checks
       - name: Build & Test
         run: ./gradlew :sakshi-sdk:check :sakshi-sdk:assembleRelease
