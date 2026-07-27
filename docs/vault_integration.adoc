@@ -21,9 +21,9 @@ In the Vault application's `AndroidManifest.xml`, declare the remote IPC service
 <service
     android:name=".service.SakshiVaultRemoteService"
     android:exported="true"
-    android:permission="rajnishkmehta.sakshi.permission.BIND_VAULT">
+    android:permission="io.github.rajnishkmehta.sakshi.permission.BIND_VAULT">
     <intent-filter>
-        <action android:name="rajnishkmehta.sakshi.vault.BIND_VAULT_SERVICE" />
+        <action android:name="io.github.rajnishkmehta.sakshi.vault.BIND_VAULT_SERVICE" />
     </intent-filter>
 </service>
 ----
@@ -34,18 +34,18 @@ The Vault service extends `Service` and returns the AIDL stub implementation in 
 
 [source,kotlin]
 ----
-package rajnishkmehta.sakshi.vault.service
+package io.github.rajnishkmehta.sakshi.vault.service
 
 import android.app.Service
 import android.content.Intent
 import android.os.Bundle
 import android.os.IBinder
-import rajnishkmehta.sakshi.sdk.api.models.CopyDoneAck
-import rajnishkmehta.sakshi.sdk.api.models.PhotoResponse
-import rajnishkmehta.sakshi.sdk.api.models.VideoSyncStatus
-import rajnishkmehta.sakshi.sdk.api.vault.VaultResponder
-import rajnishkmehta.sakshi.sdk.internal.ipc.ISakshiVaultCallback
-import rajnishkmehta.sakshi.sdk.internal.ipc.ISakshiVaultService
+import io.github.rajnishkmehta.sakshi.sdk.api.models.CopyDoneAck
+import io.github.rajnishkmehta.sakshi.sdk.api.models.PhotoResponse
+import io.github.rajnishkmehta.sakshi.sdk.api.models.VideoSyncStatus
+import io.github.rajnishkmehta.sakshi.sdk.api.vault.VaultResponder
+import io.github.rajnishkmehta.sakshi.sdk.internal.ipc.ISakshiVaultCallback
+import io.github.rajnishkmehta.sakshi.sdk.internal.ipc.ISakshiVaultService
 
 class SakshiVaultRemoteService : Service() {
 

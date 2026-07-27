@@ -13,8 +13,8 @@ v1.0.0-beta.2, 2026-07-26
 [cols="1,2", options="header"]
 |===
 | Parameter | Value
-| **Intent Action** | `rajnishkmehta.sakshi.vault.BIND_VAULT_SERVICE`
-| **Default Package** | `rajnishkmehta.sakshi.vault`
+| **Intent Action** | `io.github.rajnishkmehta.sakshi.vault.BIND_VAULT_SERVICE`
+| **Default Package** | `io.github.rajnishkmehta.sakshi.vault`
 | **IPC Protocol** | Android AIDL / IBinder Transaction
 |===
 
@@ -24,10 +24,10 @@ v1.0.0-beta.2, 2026-07-26
 
 [source,aidl]
 ----
-package rajnishkmehta.sakshi.sdk.internal.ipc;
+package io.github.rajnishkmehta.sakshi.sdk.internal.ipc;
 
 import android.os.Bundle;
-import rajnishkmehta.sakshi.sdk.internal.ipc.ISakshiVaultCallback;
+import io.github.rajnishkmehta.sakshi.sdk.internal.ipc.ISakshiVaultCallback;
 
 interface ISakshiVaultService {
     Bundle ping(in Bundle requestBundle);
@@ -42,7 +42,7 @@ interface ISakshiVaultService {
 
 [source,aidl]
 ----
-package rajnishkmehta.sakshi.sdk.internal.ipc;
+package io.github.rajnishkmehta.sakshi.sdk.internal.ipc;
 
 import android.os.Bundle;
 
