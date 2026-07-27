@@ -47,11 +47,26 @@ Sakshi SDK provides clean, idiomatic, coroutine-powered Kotlin public APIs for:
 
 Add the dependency to your app or library module's `build.gradle.kts`:
 
+### Maven Central
 ```kotlin
 repositories {
     mavenCentral()
+}
+
+dependencies {
+    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.2")
+}
+```
+### GitHub Packages
+
+```kotlin
+repositories {
     maven {
         url = uri("https://maven.pkg.github.com/RajnishKMehta/sakshi-sdk")
+        credentials {
+            username = providers.gradleProperty("gpr.user").orNull ?: System.getenv("GITHUB_ACTOR")
+            password = providers.gradleProperty("gpr.key").orNull ?: System.getenv("GITHUB_TOKEN")
+        }
     }
 }
 
@@ -59,6 +74,8 @@ dependencies {
     implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.2")
 }
 ```
+
+> **Note:** GitHub Packages requires authentication using a Personal Access Token (PAT), even for many public packages.
 
 ---
 
