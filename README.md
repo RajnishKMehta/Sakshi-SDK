@@ -1,9 +1,9 @@
 # Sakshi SDK 📱⚡
 
-[![Release](https://img.shields.io/maven-central/v/io.github.rajnishkmehta.sakshi/sakshi-sdk
-)](https://central.sonatype.com/artifact/io.github.rajnishkmehta.sakshi/sakshi-sdk)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![API](https://img.shields.io/badge/API-29%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=29)
+[![Release](https://img.shields.io/maven-central/v/io.github.rajnishkmehta.sakshi/sakshi-sdk?logo=apache-maven&style=for-the-badge)](https://central.sonatype.com/artifact/io.github.rajnishkmehta.sakshi/sakshi-sdk)
+[![API](https://img.shields.io/badge/API-29%2B-brightgreen.svg?style=for-the-badge&logo=Android)](https://android-arsenal.com/api?level=29)
+[![License](https://img.shields.io/github/license/RajnishKMehta/Sakshi-SDK?style=for-the-badge&logo=Apache
+)](https://github.com/RajnishKMehta/Sakshi-SDK/raw/refs/heads/main/LICENSE)
 
 **Sakshi SDK** (`rajnishkmehta.sakshi.sdk`) is a lightweight, headless Android client and IPC library designed for local-first inter-process communication between trusted client applications (such as *Sakshi Camera* or *Sakshi Audio*) and the **Sakshi Vault** application.
 
@@ -125,18 +125,19 @@ class SakshiVaultRemoteService : Service() {
 
 ---
 
-## 📄 AsciiDoc Documentation
+## 📄 Documentation
 
-Detailed AsciiDoc technical specifications are available in the [`/docs`](docs) directory:
+Detailed technical specifications are available in the [`/docs`](docs) directory:
 
-- 📑 [System Architecture (`/docs/architecture.adoc`)](docs/architecture.adoc)
-- 📑 [Client API Usage (`/docs/api_usage.adoc`)](docs/api_usage.adoc)
-- 📑 [Vault Integration Guide (`/docs/vault_integration.adoc`)](docs/vault_integration.adoc)
-- 📑 [AIDL IPC Specification (`/docs/ipc_specification.adoc`)](docs/ipc_specification.adoc)
-- 📑 [Development Guide (`/docs/development.adoc`)](docs/development.adoc)
+- 📑 [System Architecture](docs/architecture.adoc)
+- 📑 [Client API Usage](docs/api_usage.adoc)
+- 📑 [Vault Integration Guide](docs/vault_integration.adoc)
+- 📑 [AIDL IPC Specification](docs/ipc_specification.adoc)
+- 📑 [Development Guide](docs/development.adoc)
 
 ---
 
 ## 📄 License
 
-This project is licensed under the [Apache License 2.0](LICENSE).
+This project is licensed under the [![LICENSE](https://img.shields.io/github/license/RajnishKMehta/Sakshi-SDK?logo=apache&label=%20&color=7C297D
+)](LICENSE).
