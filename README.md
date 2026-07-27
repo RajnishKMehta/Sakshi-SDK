@@ -1,7 +1,7 @@
 # Sakshi SDK 📱⚡
 
 [![Release](https://img.shields.io/maven-central/v/io.github.rajnishkmehta.sakshi/sakshi-sdk?logo=apache-maven&style=flat-square)](https://central.sonatype.com/artifact/io.github.rajnishkmehta.sakshi/sakshi-sdk)
-[![API](https://img.shields.io/badge/API-29%2B-brightgreen.svg?style=plastic&logo=Android)]()
+[![API](https://img.shields.io/badge/API-29%2B-brightgreen.svg?style=plastic&logo=Android)](../../)
 [![License](https://img.shields.io/github/license/RajnishKMehta/Sakshi-SDK?style=flat-square&logo=Apache
 )](https://github.com/RajnishKMehta/Sakshi-SDK/raw/refs/heads/main/LICENSE)
 
