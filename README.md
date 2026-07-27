@@ -56,7 +56,7 @@ repositories {
 }
 
 dependencies {
-    implementation("rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.1")
+    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.2")
 }
 ```
 
