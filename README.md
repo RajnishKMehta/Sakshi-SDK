@@ -1,8 +1,8 @@
 # Sakshi SDK 📱⚡
 
-[![Release](https://img.shields.io/maven-central/v/io.github.rajnishkmehta.sakshi/sakshi-sdk?logo=apache-maven&style=for-the-badge)](https://central.sonatype.com/artifact/io.github.rajnishkmehta.sakshi/sakshi-sdk)
-[![API](https://img.shields.io/badge/API-29%2B-brightgreen.svg?style=for-the-badge&logo=Android)](https://android-arsenal.com/api?level=29)
-[![License](https://img.shields.io/github/license/RajnishKMehta/Sakshi-SDK?style=for-the-badge&logo=Apache
+[![Release](https://img.shields.io/maven-central/v/io.github.rajnishkmehta.sakshi/sakshi-sdk?logo=apache-maven&style=flat-square)](https://central.sonatype.com/artifact/io.github.rajnishkmehta.sakshi/sakshi-sdk)
+[![API](https://img.shields.io/badge/API-29%2B-brightgreen.svg?style=plastic&logo=Android)]()
+[![License](https://img.shields.io/github/license/RajnishKMehta/Sakshi-SDK?style=flat-square&logo=Apache
 )](https://github.com/RajnishKMehta/Sakshi-SDK/raw/refs/heads/main/LICENSE)
 
 **Sakshi SDK** (`rajnishkmehta.sakshi.sdk`) is a lightweight, headless Android client and IPC library designed for local-first inter-process communication between trusted client applications (such as *Sakshi Camera* or *Sakshi Audio*) and the **Sakshi Vault** application.
