@@ -1,6 +1,6 @@
 = Sakshi SDK Client API Usage Guide
 Rajnish Kumar <RajnishKMehta@proton.me>
-v1.0.0-beta.1, 2026-07-26
+v1.0.0-beta.2, 2026-07-26
 :description: Guide for developers building client applications using the Sakshi SDK.
 :keywords: sakshi, sdk, client, api, android, camera, audio, integration
 :toc: left
@@ -18,11 +18,11 @@ Instantiate `SakshiClient` using `SakshiClient.create(...)`:
 
 [source,kotlin]
 ----
-import rajnishkmehta.sakshi.sdk.api.SakshiClient
-import rajnishkmehta.sakshi.sdk.api.SakshiClientConfig
+import io.github.rajnishkmehta.sakshi.sdk.api.SakshiClient
+import io.github.rajnishkmehta.sakshi.sdk.api.SakshiClientConfig
 
 val config = SakshiClientConfig(
-    vaultPackageName = "rajnishkmehta.sakshi.vault",
+    vaultPackageName = "io.github.rajnishkmehta.sakshi.vault",
     connectionTimeoutMs = 5000L
 )
 
