@@ -112,14 +112,21 @@ coroutineScope.launch {
 ### B. Vault App Example (Service Side)
 
 ```kotlin
+import android.app.Service
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.os.IBinder
 import rajnishkmehta.sakshi.sdk.api.vault.VaultResponder
 import rajnishkmehta.sakshi.sdk.api.models.CopyDoneAck
+import rajnishkmehta.sakshi.sdk.internal.ipc.ISakshiVaultCallback
 import rajnishkmehta.sakshi.sdk.internal.ipc.ISakshiVaultService
 
 class SakshiVaultRemoteService : Service() {
     private val binder = object : ISakshiVaultService.Stub() {
         override fun startVideoSync(videoSyncBundle: Bundle, callback: ISakshiVaultCallback) {
             val fileId = videoSyncBundle.getString("file_id", "")
+            val sourceUriStr = videoSyncBundle.getString("uri", "")
             
             // Vault copies bytes incrementally...
             val totalCopied = performVaultCopy(fileId)
@@ -129,7 +136,7 @@ class SakshiVaultRemoteService : Service() {
                 callback,
                 CopyDoneAck(
                     fileId = fileId,
-                    originalUri = Uri.parse(videoUri.toString()),
+                    originalUri = if (sourceUriStr.isNullOrEmpty()) null else Uri.parse(sourceUriStr),
                     totalCopiedBytes = totalCopied
                 )
             )
