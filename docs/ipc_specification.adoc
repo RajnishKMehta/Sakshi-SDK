@@ -13,8 +13,8 @@ v1.0.0-beta.3, 2026-07-30
 [cols="1,2", options="header"]
 |===
 | Parameter | Value
-| **Intent Action** | `io.github.rajnishkmehta.sakshi.vault.BIND_VAULT_SERVICE`
-| **Default Package** | `io.github.rajnishkmehta.sakshi.vault`
+| **Intent Action** | `rajnishkmehta.sakshi.vault.BIND_VAULT_SERVICE`
+| **Default Package** | `rajnishkmehta.sakshi.vault`
 | **IPC Protocol** | Android AIDL / IBinder Transaction
 |===
 
@@ -69,7 +69,19 @@ _(Sent by SDK → Vault on `sendPhoto`)_
 | `meta_<key>` | String | Optional metadata entries, one key per entry prefixed with `meta_`.
 |===
 
-=== 3.2 `VideoSyncRequest` Bundle Keys
+=== 3.2 `PhotoResponse` Bundle Keys
+_(Sent by Vault → SDK via `onPhotoAck` callback)_
+
+[cols="1,1,2", options="header"]
+|===
+| Key | Type | Description
+| `file_id` | String | Unique identifier matching the original `PhotoRequest`.
+| `is_ingested` | Boolean | True if Vault successfully received and registered the photo.
+| `vault_uri` | String (Optional) | URI assigned by Vault where the photo record is stored.
+| `timestamp` | Long | Epoch timestamp in milliseconds of acknowledgement processing.
+|===
+
+=== 3.3 `VideoSyncRequest` Bundle Keys
 _(Sent by SDK → Vault on `startVideoSync`)_
 
 [cols="1,1,2", options="header"]
@@ -82,7 +94,21 @@ _(Sent by SDK → Vault on `startVideoSync`)_
 | `meta_<key>` | String | Optional metadata entries, one key per entry prefixed with `meta_`.
 |===
 
-=== 3.3 `CopyDoneAck` Bundle Keys
+=== 3.4 `VideoSyncStatus` Bundle Keys
+_(Sent by Vault → SDK via `onVideoSyncStatus` callback)_
+
+[cols="1,1,2", options="header"]
+|===
+| Key | Type | Description
+| `file_id` | String | Unique recording file identifier.
+| `sync_state` | String | Name of the current synchronization state (`INITIALIZING`, `SYNCING`, `IDLE_WAITING`, `STOPPED`, `COMPLETED`, `FAILED`).
+| `offset_bytes` | Long | Number of bytes copied to Vault so far.
+| `total_bytes` | Long | Optional total size of file if known, or `-1` if recording is ongoing.
+| `is_completed` | Boolean | True if video recording has ended and synchronization is finalized.
+| `message` | String (Optional) | Additional informational message or error string.
+|===
+
+=== 3.5 `CopyDoneAck` Bundle Keys
 _(Sent by Vault → SDK via `onCopyDone` callback)_
 
 [cols="1,1,2", options="header"]
@@ -92,4 +118,42 @@ _(Sent by Vault → SDK via `onCopyDone` callback)_
 | `original_uri` | String (Optional) | The original source URI that was provided by the client for copying.
 | `total_bytes` | Long | Total number of bytes copied.
 | `timestamp` | Long | Completion epoch timestamp in milliseconds.
+|===
+
+=== 3.6 `RecordingQueryResponse` Bundle Keys
+_(Returned by Vault → SDK from `isRecordingSynced` transaction)_
+
+[cols="1,1,2", options="header"]
+|===
+| Key | Type | Description
+| `exists` | Boolean | True if Vault recognizes and has recorded entry for this file ID.
+| `sync_state` | String (Optional) | Sync state if recording exists (`INITIALIZING`, `SYNCING`, `IDLE_WAITING`, `STOPPED`, `COMPLETED`, `FAILED`).
+| `offset_bytes` | Long | Last recorded byte offset stored by Vault.
+| `is_completed` | Boolean | True if Vault marks recording as fully copied and finalized.
+|===
+
+=== 3.7 `VaultPingResponse` Bundle Keys
+_(Returned by Vault → SDK from `ping` transaction)_
+
+[cols="1,1,2", options="header"]
+|===
+| Key | Type | Description
+| `is_available` | Boolean | True if Vault service is active and responsive.
+| `vault_version` | String | Version string reported by Vault service.
+| `timestamp` | Long | Current server timestamp reported by Vault in milliseconds.
+|===
+
+=== 3.8 `SakshiError` Bundle Keys
+_(Sent by Vault → SDK via `onError` callback)_
+
+[cols="1,1,2", options="header"]
+|===
+| Key | Type | Description
+| `error_code` | Int | Detailed error code representing the failure cause: +
+  - `1`: Permission Denied +
+  - `2`: Recording Not Found +
+  - `3`: Invalid Payload +
+  - Other values: General IPC or custom errors
+| `message` | String | Detailed error message description.
+| `file_id` | String (Optional) | Recording file ID if relevant (e.g., for `RecordingNotFound` error).
 |===
