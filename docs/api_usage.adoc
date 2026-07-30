@@ -107,7 +107,7 @@ lifecycleScope.launch {
         when (result) {
             is SakshiResult.Success -> {
                 val ack: CopyDoneAck = result.data
-                println("Copy Done! File ID: ${ack.fileId}, Vault URI: ${ack.vaultUri}, Copied Bytes: ${ack.totalCopiedBytes}")
+                println("Copy Done! File ID: ${ack.fileId}, Original URI: ${ack.originalUri}, Copied Bytes: ${ack.totalCopiedBytes}")
             }
             is SakshiResult.Failure -> {
                 println("Copy observation error: ${result.error.message}")

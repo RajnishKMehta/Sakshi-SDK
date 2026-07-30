@@ -7,13 +7,13 @@ import android.net.Uri
  * when a file copy or video synchronization pass has completed successfully.
  *
  * @property fileId Unique identifier matching the recording file.
- * @property vaultUri Optional URI assigned by Vault where the copied file is stored.
+ * @property originalUri The original source URI that was provided by the client for copying.
  * @property totalCopiedBytes Total number of bytes copied into Vault storage.
  * @property timestampEpochMs Epoch timestamp in milliseconds when copy completed.
  */
 public data class CopyDoneAck(
     public val fileId: String,
-    public val vaultUri: Uri? = null,
+    public val originalUri: Uri? = null,
     public val totalCopiedBytes: Long = 0L,
     public val timestampEpochMs: Long = System.currentTimeMillis()
 )

@@ -131,7 +131,7 @@ internal class SakshiClientImpl(
                     lastCopiedOffsetBytes = copyDone.totalCopiedBytes,
                     totalBytes = copyDone.totalCopiedBytes,
                     isCompleted = true,
-                    message = "Copy completed. Vault URI: ${copyDone.vaultUri}"
+                    message = "Copy completed. Original URI: ${copyDone.originalUri}"
                 )
                 trySend(SakshiResult.Success(status))
                 close()

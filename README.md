@@ -39,7 +39,7 @@ Sakshi SDK provides clean, idiomatic, coroutine-powered Kotlin public APIs for:
 ### Vault Responsibilities (External App)
 - File storage, incremental byte copying, and persistence.
 - Interval timers, queue scheduling, and non-overlapping copy pass execution.
-- Emitting `CopyDoneAck` (including File ID, optional Vault URI, and total copied bytes) upon completing file transfers.
+- Emitting `CopyDoneAck` (including File ID, optional original source URI, and total copied bytes) upon completing file transfers.
 
 ---
 
@@ -104,7 +104,7 @@ coroutineScope.launch {
 coroutineScope.launch {
     client.observeCopyDone("rec_999").collect { result ->
         val ack = result.getOrNull()
-        println("Copy Completed! File ID: ${ack?.fileId}, Vault URI: ${ack?.vaultUri}, Copied Bytes: ${ack?.totalCopiedBytes}")
+        println("Copy Completed! File ID: ${ack?.fileId}, Original URI: ${ack?.originalUri}, Copied Bytes: ${ack?.totalCopiedBytes}")
     }
 }
 ```
@@ -129,7 +129,7 @@ class SakshiVaultRemoteService : Service() {
                 callback,
                 CopyDoneAck(
                     fileId = fileId,
-                    vaultUri = getVaultDestinationUri(fileId),
+                    originalUri = Uri.parse(videoUri.toString()),
                     totalCopiedBytes = totalCopied
                 )
             )

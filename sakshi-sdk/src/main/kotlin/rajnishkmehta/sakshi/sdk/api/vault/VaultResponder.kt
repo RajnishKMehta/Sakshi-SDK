@@ -43,7 +43,7 @@ public object VaultResponder {
      * Sends a file copy completion acknowledgement ([CopyDoneAck]) back to the client application.
      *
      * @param callback The [ISakshiVaultCallback] instance.
-     * @param ack The [CopyDoneAck] containing file ID, optional Vault URI, and total copied byte count.
+     * @param ack The [CopyDoneAck] containing file ID, optional original source URI, and total copied byte count.
      */
     @JvmStatic
     public fun sendCopyDone(callback: ISakshiVaultCallback, ack: CopyDoneAck) {

@@ -52,7 +52,7 @@ B) VAULT RESPONSIBILITIES (External Application):
    - Maintain its own interval timer scheduler.
    - Prevent overlapping copy operations.
    - Track copied byte offsets.
-   - Send `CopyDoneAck` (with File ID, optional Vault URI, and total copied byte count) back to the calling client app.
+   - Send `CopyDoneAck` (with File ID, optional original source URI, and total copied byte count) back to the calling client app.
    - Maintain media records database.
 
 The SDK MUST NEVER copy files, run timers, store media files, or maintain a database.
@@ -64,7 +64,7 @@ The SDK MUST NEVER copy files, run timers, store media files, or maintain a data
 When Vault finishes copying a file or recording session:
 1. Vault creates a `CopyDoneAck` payload containing:
    - `fileId`: Unique recording identifier.
-   - `vaultUri`: Optional URI where the file is stored in Vault.
+   - `originalUri`: Optional original source URI provided by the client for copying.
    - `totalCopiedBytes`: Total number of bytes copied.
    - `timestampEpochMs`: Timestamp when copy completed.
 2. Vault calls `VaultResponder.sendCopyDone(callback, ack)`.
