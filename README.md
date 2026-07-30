@@ -86,6 +86,7 @@ dependencies {
 ```kotlin
 import rajnishkmehta.sakshi.sdk.api.SakshiClient
 import rajnishkmehta.sakshi.sdk.api.models.*
+import rajnishkmehta.sakshi.sdk.api.SakshiClient
 
 val client = SakshiClient.create(context)
 
