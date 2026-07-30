@@ -62,9 +62,14 @@ class SakshiVaultRemoteService : Service() {
         override fun sendPhoto(photoBundle: Bundle, callback: ISakshiVaultCallback) {
             val fileId = photoBundle.getString("file_id", "")
             val uriStr = photoBundle.getString("uri", "")
+            val mimeType = photoBundle.getString("mime_type", "image/jpeg")
+            val timestampEpochMs = photoBundle.getLong("timestamp", System.currentTimeMillis())
+            val metadata = photoBundle.keySet()
+                .filter { it.startsWith("meta_") }
+                .associate { it.removePrefix("meta_") to (photoBundle.getString(it) ?: "") }
 
             // Perform Vault photo saving logic
-            val savedVaultUri = savePhotoToVaultStorage(fileId, uriStr)
+            val savedVaultUri = savePhotoToVaultStorage(fileId, uriStr, mimeType)
 
             // Send Photo Response Ack back to client app
             val response = PhotoResponse(
@@ -78,6 +83,11 @@ class SakshiVaultRemoteService : Service() {
         override fun startVideoSync(videoSyncBundle: Bundle, callback: ISakshiVaultCallback) {
             val fileId = videoSyncBundle.getString("file_id", "")
             val sourceUriStr = videoSyncBundle.getString("uri", "")
+            val mimeType = videoSyncBundle.getString("mime_type", "video/mp4")
+            val startTimestampEpochMs = videoSyncBundle.getLong("timestamp", System.currentTimeMillis())
+            val metadata = videoSyncBundle.keySet()
+                .filter { it.startsWith("meta_") }
+                .associate { it.removePrefix("meta_") to (videoSyncBundle.getString(it) ?: "") }
 
             // 1. Emit Initializing status
             VaultResponder.sendVideoSyncStatus(
