@@ -6,7 +6,7 @@ This document serves as the single source of truth for guidelines, architecture,
 
 ## 1. Project Overview & Scope
 
-**Sakshi SDK** (`io.github.rajnishkmehta.sakshi.sdk`) is a lightweight, headless Android client library designed strictly for inter-process communication (IPC) between client applications (e.g., Camera applications) and a Vault application.
+**Sakshi SDK** (`rajnishkmehta.sakshi.sdk`) is a lightweight, headless Android client library designed strictly for inter-process communication (IPC) between client applications (e.g., Camera applications) and a Vault application.
 
 ### Strict Scope Constraints
 * **SDK Only**: This repository contains ONLY the Sakshi SDK library.
@@ -59,11 +59,11 @@ The Vault application is an external application that handles:
 ## 4. Repository & Package Structure
 
 ### 4.1 Package Name
-Root package: `io.github.rajnishkmehta.sakshi.sdk`
+Root package: `rajnishkmehta.sakshi.sdk`
 
 ### 4.2 Recommended Package Hierarchy
 ```
-io.github.rajnishkmehta.sakshi.sdk/
+rajnishkmehta.sakshi.sdk/
 ├── api/                   # Public API interfaces, models, and entry points
 │   ├── SakshiClient.kt    # Main client entry point interface/class
 │   ├── models/            # Public domain data classes and enums

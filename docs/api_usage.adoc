@@ -18,8 +18,8 @@ Instantiate `SakshiClient` using `SakshiClient.create(...)`:
 
 [source,kotlin]
 ----
-import io.github.rajnishkmehta.sakshi.sdk.api.SakshiClient
-import io.github.rajnishkmehta.sakshi.sdk.api.SakshiClientConfig
+import rajnishkmehta.sakshi.sdk.api.SakshiClient
+import rajnishkmehta.sakshi.sdk.api.SakshiClientConfig
 
 val config = SakshiClientConfig(
     vaultPackageName = "io.github.rajnishkmehta.sakshi.vault",

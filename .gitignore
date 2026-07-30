@@ -20,6 +20,7 @@ local.properties
 .cache
 .profile
 .bash_history
+.replit
 
 # Android Studio / IntelliJ IDEA
 .idea/
