@@ -1,5 +1,5 @@
 [versions]
-sakshi-sdk = "1.0.0-beta.3"
+sakshi-sdk = "1.0.0-beta.4"
 agp = "9.3.0"
 kotlin = "2.4.10"
 coroutines = "1.11.0"

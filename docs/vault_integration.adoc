@@ -1,6 +1,6 @@
 = Sakshi SDK Vault Integration & Developer Guide
 Rajnish Kumar <RajnishKMehta@proton.me>
-v1.0.0-beta.3, 2026-07-30
+v1.0.0-beta.4, 2026-07-30
 :description: Guide for Vault developers to integrate with the Sakshi SDK.
 :keywords: sakshi, sdk, vault, service, binder, integration, guide
 :toc: left
@@ -71,7 +71,7 @@ class SakshiVaultRemoteService : Service() {
             // Perform Vault photo saving logic
             val copiedBytes = savePhotoToVaultStorage(fileId, uriStr, mimeType)
 
-            // Send Photo Response Ack back to client app
+            // Send CopyDoneAck back to client app
             val copyDoneAck = CopyDoneAck(
                 fileId = fileId,
                 originalUri = if (uriStr.isNullOrEmpty()) null else Uri.parse(uriStr),
