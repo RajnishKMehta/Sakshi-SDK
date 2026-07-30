@@ -57,7 +57,9 @@ interface ISakshiVaultCallback {
 == 3. Bundle Data Structures
 
 === 3.1 `PhotoRequest` Bundle Keys
-_(Sent by SDK → Vault on `sendPhoto`)_
+_Direction: client → vault_
+
+**Description**: Contains the details of a photo capture event. Sent by the client application to the Vault to request secure ingestion and archiving of the photo.
 
 [cols="1,1,2", options="header"]
 |===
@@ -69,20 +71,10 @@ _(Sent by SDK → Vault on `sendPhoto`)_
 | `meta_<key>` | String | Optional metadata entries, one key per entry prefixed with `meta_`.
 |===
 
-=== 3.2 `PhotoResponse` Bundle Keys
-_(Sent by Vault → SDK via `onPhotoAck` callback)_
+=== 3.2 `VideoSyncRequest` Bundle Keys
+_Direction: client → vault_
 
-[cols="1,1,2", options="header"]
-|===
-| Key | Type | Description
-| `file_id` | String | Unique identifier matching the original `PhotoRequest`.
-| `is_ingested` | Boolean | True if Vault successfully received and registered the photo.
-| `vault_uri` | String (Optional) | URI assigned by Vault where the photo record is stored.
-| `timestamp` | Long | Epoch timestamp in milliseconds of acknowledgement processing.
-|===
-
-=== 3.3 `VideoSyncRequest` Bundle Keys
-_(Sent by SDK → Vault on `startVideoSync`)_
+**Description**: Sent by the client application to start real-time video synchronization for a newly initiated video recording session. This triggers Vault to begin incremental, non-overlapping background copies.
 
 [cols="1,1,2", options="header"]
 |===
@@ -94,8 +86,10 @@ _(Sent by SDK → Vault on `startVideoSync`)_
 | `meta_<key>` | String | Optional metadata entries, one key per entry prefixed with `meta_`.
 |===
 
-=== 3.4 `VideoSyncStatus` Bundle Keys
-_(Sent by Vault → SDK via `onVideoSyncStatus` callback)_
+=== 3.3 `VideoSyncStatus` Bundle Keys
+_Direction: vault → client_
+
+**Description**: Emitted periodically by Vault to provide status updates on an active video synchronization process. It contains progress indicators, current states, and copied byte metrics.
 
 [cols="1,1,2", options="header"]
 |===
@@ -108,8 +102,10 @@ _(Sent by Vault → SDK via `onVideoSyncStatus` callback)_
 | `message` | String (Optional) | Additional informational message or error string.
 |===
 
-=== 3.5 `CopyDoneAck` Bundle Keys
-_(Sent by Vault → SDK via `onCopyDone` callback)_
+=== 3.4 `CopyDoneAck` Bundle Keys
+_Direction: vault → client_
+
+**Description**: Sent by Vault to acknowledge successful copy completion or ingestion. This payload is returned as the final outcome of a successful photo submission or upon the completion of a video file transfer pass.
 
 [cols="1,1,2", options="header"]
 |===
@@ -120,8 +116,10 @@ _(Sent by Vault → SDK via `onCopyDone` callback)_
 | `timestamp` | Long | Completion epoch timestamp in milliseconds.
 |===
 
-=== 3.6 `RecordingQueryResponse` Bundle Keys
-_(Returned by Vault → SDK from `isRecordingSynced` transaction)_
+=== 3.5 `RecordingQueryResponse` Bundle Keys
+_Direction: vault → client_
+
+**Description**: Returned synchronously as a result of querying the Vault for a specific recording's existence and synchronization state.
 
 [cols="1,1,2", options="header"]
 |===
@@ -132,8 +130,10 @@ _(Returned by Vault → SDK from `isRecordingSynced` transaction)_
 | `is_completed` | Boolean | True if Vault marks recording as fully copied and finalized.
 |===
 
-=== 3.7 `VaultPingResponse` Bundle Keys
-_(Returned by Vault → SDK from `ping` transaction)_
+=== 3.6 `VaultPingResponse` Bundle Keys
+_Direction: vault → client_
+
+**Description**: Returned synchronously from Vault to acknowledge a ping/heartbeat command and indicate server-side responsiveness, connection health, and current system timestamp.
 
 [cols="1,1,2", options="header"]
 |===
@@ -143,8 +143,10 @@ _(Returned by Vault → SDK from `ping` transaction)_
 | `timestamp` | Long | Current server timestamp reported by Vault in milliseconds.
 |===
 
-=== 3.8 `SakshiError` Bundle Keys
-_(Sent by Vault → SDK via `onError` callback)_
+=== 3.7 `SakshiError` Bundle Keys
+_Direction: vault → client_
+
+**Description**: Sent by Vault to report failures, access/permission issues, missing records, or malformed payloads back to the client application.
 
 [cols="1,1,2", options="header"]
 |===

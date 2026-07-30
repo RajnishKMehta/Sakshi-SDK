@@ -2,7 +2,6 @@ package rajnishkmehta.sakshi.sdk.api.vault
 
 import rajnishkmehta.sakshi.sdk.api.SakshiError
 import rajnishkmehta.sakshi.sdk.api.models.CopyDoneAck
-import rajnishkmehta.sakshi.sdk.api.models.PhotoResponse
 import rajnishkmehta.sakshi.sdk.api.models.VideoSyncStatus
 import rajnishkmehta.sakshi.sdk.internal.ipc.AidlMappers
 import rajnishkmehta.sakshi.sdk.internal.ipc.ISakshiVaultCallback
@@ -17,12 +16,12 @@ public object VaultResponder {
      * Sends a photo ingestion acknowledgement back to the client application.
      *
      * @param callback The [ISakshiVaultCallback] received in `sendPhoto`.
-     * @param response The [PhotoResponse] details.
+     * @param ack The [CopyDoneAck] details.
      */
     @JvmStatic
-    public fun sendPhotoAck(callback: ISakshiVaultCallback, response: PhotoResponse) {
+    public fun sendPhotoAck(callback: ISakshiVaultCallback, ack: CopyDoneAck) {
         runCatching {
-            callback.onPhotoAck(AidlMappers.toBundle(response))
+            callback.onPhotoAck(AidlMappers.toBundle(ack))
         }
     }
 

@@ -89,10 +89,14 @@ import rajnishkmehta.sakshi.sdk.api.models.*
 
 val client = SakshiClient.create(context)
 
-// 1. Send Photo
-val photoResult = client.sendPhoto(PhotoRequest(fileId = "photo_001", uri = photoUri))
+// 1. Send Photo (returns SakshiResult<CopyDoneAck>)
+coroutineScope.launch {
+    val photoResult = client.sendPhoto(PhotoRequest(fileId = "photo_001", uri = photoUri))
+    val ack = photoResult.getOrNull()
+    println("Photo Sent! File ID: ${ack?.fileId}, Copied Bytes: ${ack?.totalCopiedBytes}")
+}
 
-// 2. Start Video Sync
+// 2. Start Video Sync (returns Flow<SakshiResult<VideoSyncStatus>>)
 coroutineScope.launch {
     client.startVideoSync(VideoSyncRequest(fileId = "rec_999", uri = videoUri)).collect { result ->
         val status = result.getOrNull()
@@ -100,7 +104,7 @@ coroutineScope.launch {
     }
 }
 
-// 3. Observe Copy Completion Acknowledgement
+// 3. Observe Copy Completion Acknowledgement (returns Flow<SakshiResult<CopyDoneAck>>)
 coroutineScope.launch {
     client.observeCopyDone("rec_999").collect { result ->
         val ack = result.getOrNull()

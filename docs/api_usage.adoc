@@ -57,7 +57,7 @@ Send a photo payload to Vault for storage:
 import android.net.Uri
 import rajnishkmehta.sakshi.sdk.api.SakshiResult
 import rajnishkmehta.sakshi.sdk.api.models.PhotoRequest
-import rajnishkmehta.sakshi.sdk.api.models.PhotoResponse
+import rajnishkmehta.sakshi.sdk.api.models.CopyDoneAck
 
 val photoRequest = PhotoRequest(
     fileId = "photo_2026_1001",
@@ -65,11 +65,11 @@ val photoRequest = PhotoRequest(
     mimeType = "image/jpeg"
 )
 
-val result: SakshiResult<PhotoResponse> = client.sendPhoto(photoRequest)
+val result: SakshiResult<CopyDoneAck> = client.sendPhoto(photoRequest)
 when (result) {
     is SakshiResult.Success -> {
         val ack = result.data
-        println("Photo ingested successfully! Vault URI: ${ack.vaultUri}")
+        println("Photo ingested successfully! File ID: ${ack.fileId}, Bytes: ${ack.totalCopiedBytes}")
     }
     is SakshiResult.Failure -> {
         println("Photo ingestion failed: ${result.error.message}")
