@@ -13,7 +13,7 @@ All contributors are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT
    - Android SDK 37 (API level 37)
    - Gradle 9.6.1
 2. **Architecture Rules**:
-   - Please read [AGENT.md](AGENT.md) and [context.txt](context.txt) before making any code modifications.
+   - Please read [AGENT.md](AGENT.md) and [context.txt](docs/context.txt) before making any code modifications.
    - **Sakshi SDK is headless**: No UI, Activities, Fragments, Compose, or XML layouts.
    - **Responsibility Boundaries**: Sakshi SDK performs IPC communication only. It does not perform file copying, timer management, or database storage.
 3. **Coding Standards**:
