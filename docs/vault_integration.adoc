@@ -42,7 +42,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.IBinder
 import rajnishkmehta.sakshi.sdk.api.models.CopyDoneAck
-import rajnishkmehta.sakshi.sdk.api.models.PhotoResponse
 import rajnishkmehta.sakshi.sdk.api.models.VideoSyncStatus
 import rajnishkmehta.sakshi.sdk.api.vault.VaultResponder
 import rajnishkmehta.sakshi.sdk.internal.ipc.ISakshiVaultCallback
@@ -70,15 +69,16 @@ class SakshiVaultRemoteService : Service() {
                 .associate { it.removePrefix("meta_") to (photoBundle.getString(it) ?: "") }
 
             // Perform Vault photo saving logic
-            val savedVaultUri = savePhotoToVaultStorage(fileId, uriStr, mimeType)
+            val copiedBytes = savePhotoToVaultStorage(fileId, uriStr, mimeType)
 
             // Send Photo Response Ack back to client app
-            val response = PhotoResponse(
+            val copyDoneAck = CopyDoneAck(
                 fileId = fileId,
-                isIngested = true,
-                vaultUri = savedVaultUri
+                originalUri = if (uriStr.isNullOrEmpty()) null else Uri.parse(uriStr),
+                totalCopiedBytes = copiedBytes,
+                timestampEpochMs = System.currentTimeMillis()
             )
-            VaultResponder.sendPhotoAck(callback, response)
+            VaultResponder.sendPhotoAck(callback, copyDoneAck)
         }
 
         override fun startVideoSync(videoSyncBundle: Bundle, callback: ISakshiVaultCallback) {
@@ -136,7 +136,7 @@ class SakshiVaultRemoteService : Service() {
 
 Vault developers use `VaultResponder` helpers to respond cleanly without handling raw Bundles:
 
-* `VaultResponder.sendPhotoAck(callback, photoResponse)`
+* `VaultResponder.sendPhotoAck(callback, copyDoneAck)`
 * `VaultResponder.sendVideoSyncStatus(callback, videoSyncStatus)`
 * `VaultResponder.sendCopyDone(callback, copyDoneAck)`
 * `VaultResponder.sendError(callback, sakshiError)`

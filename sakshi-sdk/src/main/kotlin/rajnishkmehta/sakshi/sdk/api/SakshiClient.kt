@@ -4,7 +4,6 @@ import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import rajnishkmehta.sakshi.sdk.api.models.CopyDoneAck
 import rajnishkmehta.sakshi.sdk.api.models.PhotoRequest
-import rajnishkmehta.sakshi.sdk.api.models.PhotoResponse
 import rajnishkmehta.sakshi.sdk.api.models.RecordingQueryResponse
 import rajnishkmehta.sakshi.sdk.api.models.VaultPingResponse
 import rajnishkmehta.sakshi.sdk.api.models.VideoSyncRequest
@@ -30,9 +29,9 @@ public interface SakshiClient {
      * Sends a photo payload to Vault for ingestion.
      *
      * @param request [PhotoRequest] detailing photo URI, ID, and metadata.
-     * @return [SakshiResult] containing [PhotoResponse] acknowledgement or [SakshiError] failure.
+     * @return [SakshiResult] containing [CopyDoneAck] acknowledgement or [SakshiError] failure.
      */
-    public suspend fun sendPhoto(request: PhotoRequest): SakshiResult<PhotoResponse>
+    public suspend fun sendPhoto(request: PhotoRequest): SakshiResult<CopyDoneAck>
 
     /**
      * Initiates video synchronization for a recording in Vault.

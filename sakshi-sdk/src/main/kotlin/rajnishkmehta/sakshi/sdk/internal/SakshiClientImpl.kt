@@ -12,7 +12,6 @@ import rajnishkmehta.sakshi.sdk.api.SakshiError
 import rajnishkmehta.sakshi.sdk.api.SakshiResult
 import rajnishkmehta.sakshi.sdk.api.models.CopyDoneAck
 import rajnishkmehta.sakshi.sdk.api.models.PhotoRequest
-import rajnishkmehta.sakshi.sdk.api.models.PhotoResponse
 import rajnishkmehta.sakshi.sdk.api.models.RecordingQueryResponse
 import rajnishkmehta.sakshi.sdk.api.models.VaultPingResponse
 import rajnishkmehta.sakshi.sdk.api.models.VideoSyncRequest
@@ -59,7 +58,7 @@ internal class SakshiClientImpl(
         }
     }
 
-    override suspend fun sendPhoto(request: PhotoRequest): SakshiResult<PhotoResponse> {
+    override suspend fun sendPhoto(request: PhotoRequest): SakshiResult<CopyDoneAck> {
         val serviceResult = serviceConnection.getService()
         if (serviceResult.isFailure) {
             return SakshiResult.Failure(serviceResult.errorOrNull()!!)
@@ -70,7 +69,7 @@ internal class SakshiClientImpl(
         return suspendCancellableCoroutine { continuation ->
             val callback = object : ISakshiVaultCallback.Stub() {
                 override fun onPhotoAck(responseBundle: Bundle) {
-                    val response = AidlMappers.toPhotoResponse(responseBundle)
+                    val response = AidlMappers.toCopyDoneAck(responseBundle)
                     if (continuation.isActive) {
                         continuation.resume(SakshiResult.Success(response))
                     }

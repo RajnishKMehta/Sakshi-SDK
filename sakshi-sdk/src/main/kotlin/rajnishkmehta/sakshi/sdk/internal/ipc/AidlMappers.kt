@@ -5,7 +5,6 @@ import android.os.Bundle
 import rajnishkmehta.sakshi.sdk.api.SakshiError
 import rajnishkmehta.sakshi.sdk.api.models.CopyDoneAck
 import rajnishkmehta.sakshi.sdk.api.models.PhotoRequest
-import rajnishkmehta.sakshi.sdk.api.models.PhotoResponse
 import rajnishkmehta.sakshi.sdk.api.models.RecordingQueryResponse
 import rajnishkmehta.sakshi.sdk.api.models.VaultPingResponse
 import rajnishkmehta.sakshi.sdk.api.models.VideoSyncRequest
@@ -20,8 +19,6 @@ internal object AidlMappers {
     private const val KEY_URI: String = "uri"
     private const val KEY_MIME_TYPE: String = "mime_type"
     private const val KEY_TIMESTAMP: String = "timestamp"
-    private const val KEY_IS_INGESTED: String = "is_ingested"
-    private const val KEY_VAULT_URI: String = "vault_uri"
     private const val KEY_ORIGINAL_URI: String = "original_uri"
 
     // Bundle Keys - Video Sync & Copy Done
@@ -51,29 +48,6 @@ internal object AidlMappers {
         }
     }
 
-    internal fun toPhotoResponse(bundle: Bundle): PhotoResponse {
-        val fileId = bundle.getString(KEY_FILE_ID, "")
-        val isIngested = bundle.getBoolean(KEY_IS_INGESTED, false)
-        val vaultUriStr = bundle.getString(KEY_VAULT_URI)
-        val timestamp = bundle.getLong(KEY_TIMESTAMP, System.currentTimeMillis())
-        val vaultUri = vaultUriStr?.let { Uri.parse(it) }
-
-        return PhotoResponse(
-            fileId = fileId,
-            isIngested = isIngested,
-            vaultUri = vaultUri,
-            timestampEpochMs = timestamp
-        )
-    }
-
-    internal fun toBundle(response: PhotoResponse): Bundle {
-        return Bundle().apply {
-            putString(KEY_FILE_ID, response.fileId)
-            putBoolean(KEY_IS_INGESTED, response.isIngested)
-            response.vaultUri?.let { putString(KEY_VAULT_URI, it.toString()) }
-            putLong(KEY_TIMESTAMP, response.timestampEpochMs)
-        }
-    }
 
     internal fun toBundle(request: VideoSyncRequest): Bundle {
         return Bundle().apply {
