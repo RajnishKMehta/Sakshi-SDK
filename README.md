@@ -54,7 +54,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.3")
+    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.4")
 }
 ```
 ### GitHub Packages
@@ -71,7 +71,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.3")
+    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.4")
 }
 ```
 
@@ -91,16 +91,30 @@ val client = SakshiClient.create(context)
 
 // 1. Send Photo (returns SakshiResult<CopyDoneAck>)
 coroutineScope.launch {
-    val photoResult = client.sendPhoto(PhotoRequest(fileId = "photo_001", uri = photoUri))
-    val ack = photoResult.getOrNull()
-    println("Photo Sent! File ID: ${ack?.fileId}, Copied Bytes: ${ack?.totalCopiedBytes}")
+    val result = client.sendPhoto(PhotoRequest(fileId = "photo_001", uri = photoUri))
+    when (result) {
+        is SakshiResult.Success -> {
+            val ack = result.data
+            println("Photo Sent! File ID: ${ack.fileId}, Copied Bytes: ${ack.totalCopiedBytes}")
+        }
+        is SakshiResult.Failure -> {
+            println("Photo ingestion failed: ${result.error.message}")
+        }
+    }
 }
 
 // 2. Start Video Sync (returns Flow<SakshiResult<VideoSyncStatus>>)
 coroutineScope.launch {
     client.startVideoSync(VideoSyncRequest(fileId = "rec_999", uri = videoUri)).collect { result ->
-        val status = result.getOrNull()
-        println("Sync State: ${status?.state}, Copied Bytes: ${status?.lastCopiedOffsetBytes}")
+        when (result) {
+            is SakshiResult.Success -> {
+                val status = result.data
+                println("Sync State: ${status.state}, Copied Bytes: ${status.lastCopiedOffsetBytes}")
+            }
+            is SakshiResult.Failure -> {
+                println("Sync Error: ${result.error.message}")
+            }
+        }
     }
 }
 

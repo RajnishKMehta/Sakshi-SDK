@@ -1,6 +1,6 @@
 = Sakshi SDK Architecture & Design Specification
 Rajnish Kumar <RajnishKMehta@proton.me>
-v1.0.0-beta.3, 2026-07-30
+v1.0.0-beta.4, 2026-07-30
 :description: System architecture and design specification for the Sakshi SDK.
 :keywords: sakshi, sdk, architecture, design, ipc, android, binder, aidl
 :toc: left
