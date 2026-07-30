@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/github/license/RajnishKMehta/Sakshi-SDK?style=flat-square&logo=Apache
 )](https://github.com/RajnishKMehta/Sakshi-SDK/raw/refs/heads/main/LICENSE)
 
-**Sakshi SDK** (`io.github.rajnishkmehta.sakshi.sdk`) is a lightweight, headless Android client and IPC library designed for local-first inter-process communication between trusted client applications (such as *Sakshi Camera* or *Sakshi Audio*) and the **Sakshi Vault** application.
+**Sakshi SDK** (`rajnishkmehta.sakshi.sdk`) is a lightweight, headless Android client and IPC library designed for local-first inter-process communication between trusted client applications (such as *Sakshi Camera* or *Sakshi Audio*) and the **Sakshi Vault** application.
 
 ---
 
@@ -84,8 +84,8 @@ dependencies {
 ### A. Client App Example (Camera / Audio)
 
 ```kotlin
-import io.github.rajnishkmehta.sakshi.sdk.api.SakshiClient
-import io.github.rajnishkmehta.sakshi.sdk.api.models.*
+import rajnishkmehta.sakshi.sdk.api.SakshiClient
+import rajnishkmehta.sakshi.sdk.api.models.*
 
 val client = SakshiClient.create(context)
 
@@ -112,9 +112,9 @@ coroutineScope.launch {
 ### B. Vault App Example (Service Side)
 
 ```kotlin
-import io.github.rajnishkmehta.sakshi.sdk.api.vault.VaultResponder
-import io.github.rajnishkmehta.sakshi.sdk.api.models.CopyDoneAck
-import io.github.rajnishkmehta.sakshi.sdk.internal.ipc.ISakshiVaultService
+import rajnishkmehta.sakshi.sdk.api.vault.VaultResponder
+import rajnishkmehta.sakshi.sdk.api.models.CopyDoneAck
+import rajnishkmehta.sakshi.sdk.internal.ipc.ISakshiVaultService
 
 class SakshiVaultRemoteService : Service() {
     private val binder = object : ISakshiVaultService.Stub() {

@@ -24,10 +24,10 @@ v1.0.0-beta.2, 2026-07-26
 
 [source,aidl]
 ----
-package io.github.rajnishkmehta.sakshi.sdk.internal.ipc;
+package rajnishkmehta.sakshi.sdk.internal.ipc;
 
 import android.os.Bundle;
-import io.github.rajnishkmehta.sakshi.sdk.internal.ipc.ISakshiVaultCallback;
+import rajnishkmehta.sakshi.sdk.internal.ipc.ISakshiVaultCallback;
 
 interface ISakshiVaultService {
     Bundle ping(in Bundle requestBundle);
@@ -42,7 +42,7 @@ interface ISakshiVaultService {
 
 [source,aidl]
 ----
-package io.github.rajnishkmehta.sakshi.sdk.internal.ipc;
+package rajnishkmehta.sakshi.sdk.internal.ipc;
 
 import android.os.Bundle;
 

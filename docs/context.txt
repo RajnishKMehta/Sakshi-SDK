@@ -13,7 +13,7 @@ The Sakshi ecosystem provides local-first, high-performance inter-process commun
 - Sakshi Viewer (Client App)
 - Sakshi Vault (Service App)
 
-Sakshi SDK (`io.github.rajnishkmehta.sakshi.sdk`) is the official lightweight client and IPC library used by all applications in the ecosystem.
+Sakshi SDK (`rajnishkmehta.sakshi.sdk`) is the official lightweight client and IPC library used by all applications in the ecosystem.
 
 ================================================================================
 2. Why This SDK Exists
@@ -87,7 +87,7 @@ When Vault finishes copying a file or recording session:
 7. Repository Scope & Rules
 ================================================================================
 
-- Repository contains ONLY the SDK (`io.github.rajnishkmehta.sakshi.sdk`).
+- Repository contains ONLY the SDK (`rajnishkmehta.sakshi.sdk`).
 - NO UI, Activities, Fragments, Compose, XML layouts, or sample apps inside SDK repository.
 - Min Android SDK: Android 10 (API 29). Compile SDK: 37. Java 21 toolchain.
 - Standard: Kotlin only, explicit API mode enabled, full KDoc documentation.
