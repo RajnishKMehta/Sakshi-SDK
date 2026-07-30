@@ -72,7 +72,7 @@ When Vault completes copying a recording or file pass:
 1. Vault determines that all bytes have been copied and the recording is finalized.
 2. Vault constructs a `CopyDoneAck` payload containing:
    * `fileId`: Unique recording identifier.
-   * `vaultUri` (Optional): URI assigned by Vault where the copied file resides.
+   * `originalUri` (Optional): The original source URI provided by the client for copying.
    * `totalCopiedBytes`: Total byte count transferred.
    * `timestampEpochMs`: Timestamp of copy completion.
 3. Vault invokes `callback.onCopyDone(bundle)` using `VaultResponder.sendCopyDone(...)`.

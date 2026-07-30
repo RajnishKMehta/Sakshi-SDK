@@ -89,7 +89,7 @@ _(Sent by Vault → SDK via `onCopyDone` callback)_
 |===
 | Key | Type | Description
 | `file_id` | String | Unique recording file identifier.
-| `vault_uri` | String (Optional) | Content URI of copied file in Vault storage.
+| `original_uri` | String (Optional) | The original source URI that was provided by the client for copying.
 | `total_bytes` | Long | Total number of bytes copied.
 | `timestamp` | Long | Completion epoch timestamp in milliseconds.
 |===

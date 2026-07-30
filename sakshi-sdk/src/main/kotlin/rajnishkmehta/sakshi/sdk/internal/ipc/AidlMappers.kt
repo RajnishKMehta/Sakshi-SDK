@@ -22,6 +22,7 @@ internal object AidlMappers {
     private const val KEY_TIMESTAMP: String = "timestamp"
     private const val KEY_IS_INGESTED: String = "is_ingested"
     private const val KEY_VAULT_URI: String = "vault_uri"
+    private const val KEY_ORIGINAL_URI: String = "original_uri"
 
     // Bundle Keys - Video Sync & Copy Done
     private const val KEY_FILE_ID: String = "file_id"
@@ -120,7 +121,7 @@ internal object AidlMappers {
     internal fun toBundle(ack: CopyDoneAck): Bundle {
         return Bundle().apply {
             putString(KEY_FILE_ID, ack.fileId)
-            ack.vaultUri?.let { putString(KEY_VAULT_URI, it.toString()) }
+            ack.originalUri?.let { putString(KEY_ORIGINAL_URI, it.toString()) }
             putLong(KEY_TOTAL_BYTES, ack.totalCopiedBytes)
             putLong(KEY_TIMESTAMP, ack.timestampEpochMs)
         }
@@ -128,14 +129,14 @@ internal object AidlMappers {
 
     internal fun toCopyDoneAck(bundle: Bundle): CopyDoneAck {
         val fileId = bundle.getString(KEY_FILE_ID, "")
-        val vaultUriStr = bundle.getString(KEY_VAULT_URI)
+        val originalUriStr = bundle.getString(KEY_ORIGINAL_URI)
         val totalCopied = bundle.getLong(KEY_TOTAL_BYTES, 0L)
         val timestamp = bundle.getLong(KEY_TIMESTAMP, System.currentTimeMillis())
-        val vaultUri = vaultUriStr?.let { Uri.parse(it) }
+        val originalUri = originalUriStr?.let { Uri.parse(it) }
 
         return CopyDoneAck(
             fileId = fileId,
-            vaultUri = vaultUri,
+            originalUri = originalUri,
             totalCopiedBytes = totalCopied,
             timestampEpochMs = timestamp
         )
