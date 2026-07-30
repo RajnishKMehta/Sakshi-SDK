@@ -54,7 +54,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.2")
+    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.3")
 }
 ```
 ### GitHub Packages
@@ -71,7 +71,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.2")
+    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.3")
 }
 ```
 
