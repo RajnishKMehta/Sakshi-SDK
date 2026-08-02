@@ -62,7 +62,7 @@ class SakshiVaultRemoteService : Service() {
         override fun sendPhoto(photoBundle: Bundle, callback: ISakshiVaultCallback) {
             val fileId = photoBundle.getString("file_id", "")
             val uriStr = photoBundle.getString("uri", "")
-            val mimeType = photoBundle.getString("mime_type", "image/jpeg")
+            val mimeType = photoBundle.getString("mime_type", "") // example: image/jpeg
             val timestampEpochMs = photoBundle.getLong("timestamp", System.currentTimeMillis())
             val metadata = photoBundle.keySet()
                 .filter { it.startsWith("meta_") }
@@ -84,7 +84,7 @@ class SakshiVaultRemoteService : Service() {
         override fun startVideoSync(videoSyncBundle: Bundle, callback: ISakshiVaultCallback) {
             val fileId = videoSyncBundle.getString("file_id", "")
             val sourceUriStr = videoSyncBundle.getString("uri", "")
-            val mimeType = videoSyncBundle.getString("mime_type", "video/mp4")
+            val mimeType = videoSyncBundle.getString("mime_type", "") // example: video/mp4
             val startTimestampEpochMs = videoSyncBundle.getLong("timestamp", System.currentTimeMillis())
             val metadata = videoSyncBundle.keySet()
                 .filter { it.startsWith("meta_") }
