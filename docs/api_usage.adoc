@@ -62,7 +62,7 @@ import rajnishkmehta.sakshi.sdk.api.models.CopyDoneAck
 val photoRequest = PhotoRequest(
     fileId = "photo_2026_1001",
     uri = photoContentUri, // android.net.Uri
-    mimeType = "image/jpeg"
+    mimeType = "${mimeType}" // example image/jpeg
 )
 
 val result: SakshiResult<CopyDoneAck> = client.sendPhoto(photoRequest)
@@ -93,7 +93,7 @@ import rajnishkmehta.sakshi.sdk.api.models.VideoSyncStatus
 val videoRequest = VideoSyncRequest(
     fileId = "video_rec_999",
     uri = activeVideoRecordingUri, // android.net.Uri
-    mimeType = "video/mp4"
+    mimeType = "${mimeType}" // example video/mp4
 )
 
 // Collect real-time progress updates
