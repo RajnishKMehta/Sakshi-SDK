@@ -42,7 +42,7 @@ internal class VaultServiceConnection(
             if (it.asBinder().isBinderAlive) {
                 return SakshiResult.Success(it)
             } else {
-                clearServiceState()
+                unbindInternal()
             }
         }
 
