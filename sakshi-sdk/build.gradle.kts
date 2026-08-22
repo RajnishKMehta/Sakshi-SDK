@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+    buildToolsVersion = "37.0.0"
     namespace = "rajnishkmehta.sakshi.sdk"
     compileSdk = 37
 
@@ -50,7 +51,7 @@ kotlin {
 
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.core.ktx)
 }

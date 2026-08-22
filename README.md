@@ -2,16 +2,16 @@
 
 [![Release](https://img.shields.io/maven-central/v/io.github.rajnishkmehta.sakshi/sakshi-sdk?logo=apache-maven&style=flat-square)](https://central.sonatype.com/artifact/io.github.rajnishkmehta.sakshi/sakshi-sdk)
 [![API](https://img.shields.io/badge/API-29%2B-brightgreen.svg?style=plastic&logo=Android)](../../)
-[![License](https://img.shields.io/github/license/RajnishKMehta/Sakshi-SDK?style=flat-square&logo=Apache
-)](https://github.com/RajnishKMehta/Sakshi-SDK/raw/refs/heads/main/LICENSE)
+[![License](https://img.shields.io/github/license/RajnishKMehta/Sakshi-SDK?style=flat-square&logo=Apache)](https://github.com/RajnishKMehta/Sakshi-SDK/raw/refs/heads/main/LICENSE)
 
-**Sakshi SDK** (`rajnishkmehta.sakshi.sdk`) is a lightweight, headless Android client and IPC library designed for local-first inter-process communication between trusted client applications (such as *Sakshi Camera* or *Sakshi Audio*) and the **Sakshi Vault** application.
+**Sakshi SDK** (`rajnishkmehta.sakshi.sdk`) is a lightweight, headless Android client and IPC library designed for local-first inter-process communication between trusted client applications (such as _Sakshi Camera_ or _Sakshi Audio_) and the **Sakshi Vault** application.
 
 ---
 
 ## 💡 What is Sakshi SDK?
 
 Sakshi SDK provides clean, idiomatic, coroutine-powered Kotlin public APIs for:
+
 1. **Client Developers (Camera, Audio, Viewer)**: Send photos, manage incremental video sync, ping Vault, query recording status, and observe file copy completion acknowledgements (`CopyDoneAck`).
 2. **Vault Developers**: Implement remote AIDL service binding and send structured responses, sync progress, copy completion acknowledgements, and error events using `VaultResponder`.
 
@@ -32,11 +32,13 @@ Sakshi SDK provides clean, idiomatic, coroutine-powered Kotlin public APIs for:
 ```
 
 ### SDK Responsibilities
+
 - Inter-process communication bridge with Vault service.
 - Hiding Binder proxy transactions, AIDL interfaces, and death recipient handling.
 - Providing `SakshiClient` for client applications and `VaultResponder` for Vault applications.
 
 ### Vault Responsibilities (External App)
+
 - File storage, incremental byte copying, and persistence.
 - Interval timers, queue scheduling, and non-overlapping copy pass execution.
 - Emitting `CopyDoneAck` (including File ID, optional original source URI, and total copied bytes) upon completing file transfers.
@@ -48,15 +50,17 @@ Sakshi SDK provides clean, idiomatic, coroutine-powered Kotlin public APIs for:
 Add the dependency to your app or library module's `build.gradle.kts`:
 
 ### Maven Central
+
 ```kotlin
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.4")
+    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.5")
 }
 ```
+
 ### GitHub Packages
 
 ```kotlin
@@ -71,7 +75,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.4")
+    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-beta.5")
 }
 ```
 
@@ -146,7 +150,7 @@ class SakshiVaultRemoteService : Service() {
         override fun startVideoSync(videoSyncBundle: Bundle, callback: ISakshiVaultCallback) {
             val fileId = videoSyncBundle.getString("file_id", "")
             val sourceUriStr = videoSyncBundle.getString("uri", "")
-            
+
             // Vault copies bytes incrementally...
             val totalCopied = performVaultCopy(fileId)
 
@@ -182,5 +186,4 @@ Detailed technical specifications are available in the [`/docs`](docs) directory
 
 ## 📄 License
 
-This project is licensed under the [![LICENSE](https://img.shields.io/github/license/RajnishKMehta/Sakshi-SDK?logo=apache&label=%20&color=7C297D
-)](LICENSE).
+This project is licensed under the [![LICENSE](https://img.shields.io/github/license/RajnishKMehta/Sakshi-SDK?logo=apache&label=%20&color=7C297D)](LICENSE).
