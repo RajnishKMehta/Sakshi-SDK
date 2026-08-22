@@ -1,6 +1,6 @@
 = Sakshi SDK Vault Integration & Developer Guide
 Rajnish Kumar <RajnishKMehta@proton.me>
-v1.0.0-beta.4, 2026-07-30
+v1.0.0-beta.5, 2026-07-30
 :description: Guide for Vault developers to integrate with the Sakshi SDK.
 :keywords: sakshi, sdk, vault, service, binder, integration, guide
 :toc: left
@@ -21,7 +21,7 @@ In the Vault application's `AndroidManifest.xml`, declare the remote IPC service
 <service
     android:name=".service.SakshiVaultRemoteService"
     android:exported="true"
-    android:permission="rajnishkmehta.sakshi.permission.BIND_VAULT">
+
     <intent-filter>
         <action android:name="rajnishkmehta.sakshi.vault.BIND_VAULT_SERVICE" />
     </intent-filter>
