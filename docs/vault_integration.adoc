@@ -1,6 +1,6 @@
 = Sakshi SDK Vault Integration & Developer Guide
 Rajnish Kumar <RajnishKMehta@proton.me>
-v1.0.0-beta.5, 2026-07-30
+v1.0.0-beta.5, 2026-08-22
 :description: Guide for Vault developers to integrate with the Sakshi SDK.
 :keywords: sakshi, sdk, vault, service, binder, integration, guide
 :toc: left
