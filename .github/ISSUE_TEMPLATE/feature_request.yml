@@ -2,6 +2,7 @@ name: Feature Request
 description: Suggest an idea or enhancement for Sakshi SDK.
 title: "[FEATURE]: "
 labels: ["enhancement"]
+assignees: [RajnishKMehta]
 body:
   - type: textarea
     id: problem
