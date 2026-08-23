@@ -2,6 +2,7 @@ name: Bug Report
 description: Create a report to help us fix a bug or unexpected behavior in Sakshi SDK.
 title: "[BUG]: "
 labels: ["bug"]
+assignees: [RajnishKMehta]
 body:
   - type: markdown
     attributes:
