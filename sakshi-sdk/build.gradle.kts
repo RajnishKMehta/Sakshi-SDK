@@ -1,3 +1,4 @@
+import org.gradle.plugins.signing.Sign
 import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.SourcesJar
@@ -26,6 +27,7 @@ android {
                 "proguard-rules.pro"
             )
         }
+
         debug {
             isMinifyEnabled = false
         }
@@ -43,6 +45,7 @@ android {
 
 kotlin {
     jvmToolchain(21)
+
     compilerOptions {
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
         freeCompilerArgs.add("-Xexplicit-api=strict")
@@ -57,20 +60,36 @@ dependencies {
 }
 
 mavenPublishing {
-    coordinates("io.github.rajnishkmehta.sakshi", "sakshi-sdk", libs.versions.sakshi.sdk.get())
+    coordinates(
+        "io.github.rajnishkmehta.sakshi",
+        "sakshi-sdk",
+        libs.versions.sakshi.sdk.get()
+    )
 
     publishToMavenCentral(automaticRelease = true)
     signAllPublications()
 
-    configure(AndroidSingleVariantLibrary(
-        javadocJar = JavadocJar.Empty(),
-        sourcesJar = SourcesJar.Sources(),
-        variant = "release"
-    ))
+    tasks.withType<Sign>().configureEach {
+        onlyIf {
+            !gradle.startParameter.taskNames.any {
+                it.contains("publishToMavenLocal", ignoreCase = true)
+            }
+        }
+    }
+
+    configure(
+        AndroidSingleVariantLibrary(
+            javadocJar = JavadocJar.Empty(),
+            sourcesJar = SourcesJar.Sources(),
+            variant = "release"
+        )
+    )
 
     pom {
         name.set("Sakshi SDK")
-        description.set("Official Android SDK for building secure integrations with the Sakshi ecosystem through a modern IPC communication layer.")
+        description.set(
+            "Official Android SDK for building secure integrations with the Sakshi ecosystem through a modern IPC communication layer."
+        )
         url.set("https://github.com/RajnishKMehta/sakshi-sdk")
 
         licenses {
@@ -90,7 +109,9 @@ mavenPublishing {
 
         scm {
             connection.set("scm:git:github.com/RajnishKMehta/sakshi-sdk.git")
-            developerConnection.set("scm:git:ssh://github.com/RajnishKMehta/sakshi-sdk.git")
+            developerConnection.set(
+                "scm:git:ssh://github.com/RajnishKMehta/sakshi-sdk.git"
+            )
             url.set("https://github.com/RajnishKMehta/sakshi-sdk")
         }
     }
