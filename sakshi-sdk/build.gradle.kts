@@ -9,9 +9,10 @@ plugins {
 }
 
 android {
-    buildToolsVersion = "37.0.0"
     namespace = "rajnishkmehta.sakshi.sdk"
+    
     compileSdk = 37
+    compileSdkMinor = 2
 
     defaultConfig {
         minSdk = 29
@@ -59,6 +60,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.platform.launcher)
+    testImplementation(libs.mockk)
 }
 
 tasks.withType<Test> {
