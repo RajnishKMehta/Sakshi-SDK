@@ -1,13 +1,14 @@
 [versions]
-mockk = "1.13.10"
-sakshi-sdk = "1.0.0-beta.7"
+sakshi-sdk = "1.0.0-RC.0"
+
 agp = "9.4.1"
+mockk = "1.14.11"
 kotlin = "2.4.20"
 coroutines = "1.11.0"
-androidx-core = "1.19.0"
+androidx-core = "1.19.1"
 androidx-annotation = "1.10.0"
-junit-jupiter = "5.10.2"
-junit-platform = "1.10.2"
+junit-jupiter = "6.1.3"
+junit-platform = "6.1.3"
 
 [libraries]
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
