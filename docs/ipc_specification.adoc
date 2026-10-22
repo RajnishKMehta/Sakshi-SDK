@@ -1,6 +1,6 @@
 = Sakshi SDK AIDL IPC Specification
 Rajnish Kumar <RajnishKMehta@proton.me>
-v1.0.0-RC.2, 2026-10-21
+v1.0.0-RC.3, 2026-10-23
 :description: AIDL interface contracts and IPC specification for the Sakshi SDK.
 :keywords: sakshi, sdk, aidl, ipc, binder, bundle, serialization
 :toc: left
@@ -38,6 +38,7 @@ interface ISakshiVaultService {
     void stopAVSync(in String fileId, in ISakshiVaultCallback callback);
     Bundle isAVSynced(in String fileId);
     Bundle listMedia();
+    Bundle listDeletedMedia();
     String getThumbnail();
 }
 ----
@@ -101,7 +102,7 @@ _Direction: vault → client_
 |===
 | Key | Type | Description
 | `file_id` | String | Unique recording file identifier.
-| `sync_state` | String | Name of the current synchronization state (`INITIALIZING`, `SYNCING`, `IDLE_WAITING`, `PAUSED`, `STOPPED`, `COMPLETED`, `FAILED`).
+| `sync_state` | String | Name of the current synchronization state (`INITIALIZING`, `SYNCING`, `IDLE_WAITING`, `PAUSED`, `STOPPED`, `COMPLETED`, `FAILED`, `DELETE`).
 | `offset_bytes` | Long | Number of bytes copied to Vault so far.
 | `total_bytes` | Long | Optional total size of file if known, or `-1` if recording is ongoing.
 | `is_completed` | Boolean | True if audio/video recording has ended and synchronization is finalized.
@@ -131,7 +132,7 @@ _Direction: vault → client_
 |===
 | Key | Type | Description
 | `exists` | Boolean | True if Vault recognizes and has recorded entry for this file ID.
-| `sync_state` | String (Optional) | Sync state if recording exists (`INITIALIZING`, `SYNCING`, `IDLE_WAITING`, `PAUSED`, `STOPPED`, `COMPLETED`, `FAILED`).
+| `sync_state` | String (Optional) | Sync state if recording exists (`INITIALIZING`, `SYNCING`, `IDLE_WAITING`, `PAUSED`, `STOPPED`, `COMPLETED`, `FAILED`, `DELETE`).
 | `offset_bytes` | Long | Last recorded byte offset stored by Vault.
 | `is_completed` | Boolean | True if Vault marks recording as fully copied and finalized.
 |===

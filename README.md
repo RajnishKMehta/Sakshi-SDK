@@ -60,7 +60,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-RC.2")
+    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-RC.3")
 }
 ```
 
@@ -78,7 +78,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-RC.2")
+    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-RC.3")
 }
 ```
 
@@ -160,6 +160,7 @@ coroutineScope.launch {
 // 6. List Media
 coroutineScope.launch {
     val result = client.listMedia()
+    // To get only files scheduled for deletion, use client.listDeletedMedia()
     if (result is SakshiResult.Success) {
         println("Media JSON: ${result.data}")
     }

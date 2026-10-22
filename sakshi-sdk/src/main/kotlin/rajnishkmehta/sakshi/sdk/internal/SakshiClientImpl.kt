@@ -14,6 +14,7 @@ import rajnishkmehta.sakshi.sdk.api.SakshiClient
 import rajnishkmehta.sakshi.sdk.api.SakshiClientConfig
 import rajnishkmehta.sakshi.sdk.api.SakshiError
 import rajnishkmehta.sakshi.sdk.api.models.BatchMediaDeleteResponse
+import rajnishkmehta.sakshi.sdk.api.models.BatchMediaRecoverResponse
 import rajnishkmehta.sakshi.sdk.api.SakshiResult
 import rajnishkmehta.sakshi.sdk.api.models.CopyDoneAck
 import rajnishkmehta.sakshi.sdk.api.models.FileCopyRequest
@@ -125,7 +126,7 @@ internal class SakshiClientImpl(
             override fun onAVSyncStatus(syncStatusBundle: Bundle) {
                 val status = AidlMappers.toAVSyncStatus(syncStatusBundle)
                 trySend(SakshiResult.Success(status))
-                if (status.isCompleted || status.state == AVSyncStatus.State.FAILED || status.state == AVSyncStatus.State.STOPPED) {
+                if (status.isCompleted || status.state == AVSyncStatus.State.FAILED || status.state == AVSyncStatus.State.STOPPED || status.state == AVSyncStatus.State.DELETE) {
                     close()
                 }
             }
@@ -231,7 +232,7 @@ internal class SakshiClientImpl(
                         if (continuation.isActive) {
                             continuation.resume(SakshiResult.Success(Unit))
                         }
-                    } else if (status.state == AVSyncStatus.State.FAILED || status.state == AVSyncStatus.State.STOPPED || status.state == AVSyncStatus.State.COMPLETED) {
+                    } else if (status.state == AVSyncStatus.State.FAILED || status.state == AVSyncStatus.State.STOPPED || status.state == AVSyncStatus.State.COMPLETED || status.state == AVSyncStatus.State.DELETE) {
                         if (continuation.isActive) {
                             continuation.resume(SakshiResult.Failure(SakshiError.Unknown(status.message ?: "Unexpected sync state: ${status.state}", null)))
                         }
@@ -278,7 +279,7 @@ internal class SakshiClientImpl(
                         if (continuation.isActive) {
                             continuation.resume(SakshiResult.Success(Unit))
                         }
-                    } else if (status.state == AVSyncStatus.State.FAILED || status.state == AVSyncStatus.State.STOPPED || status.state == AVSyncStatus.State.COMPLETED) {
+                    } else if (status.state == AVSyncStatus.State.FAILED || status.state == AVSyncStatus.State.STOPPED || status.state == AVSyncStatus.State.COMPLETED || status.state == AVSyncStatus.State.DELETE) {
                         if (continuation.isActive) {
                             continuation.resume(SakshiResult.Failure(SakshiError.Unknown(status.message ?: "Unexpected sync state: ${status.state}", null)))
                         }
@@ -356,6 +357,36 @@ internal class SakshiClientImpl(
             SakshiResult.Failure(
                 SakshiError.IpcError(
                     message = e.message ?: "Failed to list media",
+                    cause = e
+                )
+            )
+        }
+    }
+
+    override suspend fun listDeletedMedia(): SakshiResult<String> {
+        val serviceResult = serviceConnection.getService()
+        if (serviceResult.isFailure) {
+            return SakshiResult.Failure(serviceResult.errorOrNull()!!)
+        }
+
+        val service = serviceResult.getOrNull()!!
+
+        return try {
+            val resBundle = kotlinx.coroutines.withContext(Dispatchers.IO) {
+                service.listDeletedMedia()
+            }
+            val json = resBundle.getString("media_list_json")
+            if (json != null) {
+                SakshiResult.Success(json)
+            } else {
+                SakshiResult.Failure(SakshiError.Unknown("No JSON returned from vault", null))
+            }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Throwable) {
+            SakshiResult.Failure(
+                SakshiError.IpcError(
+                    message = e.message ?: "Failed to list deleted media",
                     cause = e
                 )
             )
@@ -489,6 +520,80 @@ internal class SakshiClientImpl(
         } catch (e: Throwable) {
             SakshiResult.Failure(
                 SakshiError.IpcError(message = e.message ?: "Failed to batch delete media", cause = e)
+            )
+        }
+    }
+
+
+    override suspend fun recoverMedia(fileId: String): SakshiResult<Unit> {
+        val serviceResult = serviceConnection.getService()
+        if (serviceResult.isFailure) {
+            return SakshiResult.Failure(serviceResult.errorOrNull()!!)
+        }
+
+        val service = serviceResult.getOrNull()!!
+
+        return try {
+            val bundle = kotlinx.coroutines.withContext(Dispatchers.IO) {
+                service.recoverMedia(fileId)
+            }
+
+            if (bundle.getBoolean("success", false)) {
+                SakshiResult.Success(Unit)
+            } else {
+                SakshiResult.Failure(
+                    SakshiError.IpcError(message = bundle.getString("error") ?: "Failed to recover media", cause = null)
+                )
+            }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Throwable) {
+            SakshiResult.Failure(
+                SakshiError.IpcError(message = e.message ?: "Failed to recover media", cause = e)
+            )
+        }
+    }
+
+    override suspend fun recoverMedia(fileIds: List<String>): SakshiResult<BatchMediaRecoverResponse> {
+        if (fileIds.isEmpty()) {
+            return SakshiResult.Success(BatchMediaRecoverResponse(emptyList(), emptyMap()))
+        }
+
+        val serviceResult = serviceConnection.getService()
+        if (serviceResult.isFailure) {
+            return SakshiResult.Failure(serviceResult.errorOrNull()!!)
+        }
+
+        val service = serviceResult.getOrNull()!!
+
+        return try {
+            val bundle = kotlinx.coroutines.withContext(Dispatchers.IO) {
+                service.recoverMediaBatch(fileIds)
+            }
+
+            val successfulIds = bundle.getStringArrayList("successfulIds")?.toList() ?: emptyList()
+            val failedIdsBundle = bundle.getBundle("failedIds")
+            val failedIds = mutableMapOf<String, String>()
+
+            if (failedIdsBundle != null) {
+                for (key in failedIdsBundle.keySet()) {
+                    val error = failedIdsBundle.getString(key)
+                    if (error != null) {
+                        failedIds[key] = error
+                    }
+                }
+            }
+
+            if (successfulIds.isEmpty() && failedIds.isEmpty()) {
+                 SakshiResult.Failure(SakshiError.IpcError(message = bundle.getString("error") ?: "Failed to batch recover media", cause = null))
+            } else {
+                SakshiResult.Success(BatchMediaRecoverResponse(successfulIds, failedIds))
+            }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Throwable) {
+            SakshiResult.Failure(
+                SakshiError.IpcError(message = e.message ?: "Failed to batch recover media", cause = e)
             )
         }
     }

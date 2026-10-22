@@ -81,6 +81,11 @@ interface ISakshiVaultService {
      */
     Bundle listMedia();
 
+    /**
+     * Lists all stored media files scheduled for deletion grouped by media type in JSON format.
+     */
+    Bundle listDeletedMedia();
+
 
     /**
      * Retrieves the ContentProvider URI template for accessing media thumbnails.
@@ -94,18 +99,35 @@ interface ISakshiVaultService {
     Bundle getMedia(in String fileId);
 
     /**
-     * Deletes a specific media file from the Vault.
+     * Schedules a specific media file for deletion in the Vault. The file is permanently
+     * deleted after the Vault's retention period, not immediately.
      *
-     * @param fileId Unique identifier of the media file to delete.
+     * @param fileId Unique identifier of the media file to schedule for deletion.
      * @return Bundle containing success status or error details.
      */
     Bundle deleteMedia(in String fileId);
 
     /**
-     * Deletes multiple media files from the Vault in a single batch.
+     * Schedules multiple media files for deletion in the Vault in a single batch.
      *
-     * @param fileIds List of unique identifiers of the media files to delete.
-     * @return Bundle containing the lists of successful and failed deletions.
+     * @param fileIds List of unique identifiers of the media files to schedule for deletion.
+     * @return Bundle containing the lists of successfully scheduled and failed files.
      */
     Bundle deleteMediaBatch(in List<String> fileIds);
+
+    /**
+     * Recovers a specific media file previously scheduled for deletion in the Vault.
+     *
+     * @param fileId Unique identifier of the media file to recover.
+     * @return Bundle containing success status or error details.
+     */
+    Bundle recoverMedia(in String fileId);
+
+    /**
+     * Recovers multiple media files previously scheduled for deletion in the Vault in a single batch.
+     *
+     * @param fileIds List of unique identifiers of the media files to recover.
+     * @return Bundle containing the lists of successfully recovered and failed files.
+     */
+    Bundle recoverMediaBatch(in List<String> fileIds);
 }

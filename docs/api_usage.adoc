@@ -1,6 +1,6 @@
 = Sakshi SDK Client API Usage Guide
 Rajnish Kumar <RajnishKMehta@proton.me>
-v1.0.0-RC.2, 2026-10-21
+v1.0.0-RC.3, 2026-10-23
 :description: Guide for developers building client applications using the Sakshi SDK.
 :keywords: sakshi, sdk, client, api, android, camera, audio, integration
 :toc: left
@@ -219,7 +219,12 @@ lifecycleScope.launch {
 
 == 11. Deleting Media
 
-Client applications can request to delete single or multiple media files from the Vault database and storage.
+Client applications can schedule single or multiple media files for deletion. Vault does not delete files immediately: a scheduled file is hidden from `listMedia` right away (`getMedia` still returns it and its sync state is reported as `DELETE`) and its private Vault copy (media file and thumbnail) is permanently deleted after a 30-day retention period. Public copies exported by client apps and original camera files are never touched.
+
+Rules enforced by Vault:
+
+* Repeated requests for an already scheduled file succeed and keep the original schedule.
+* Unknown file IDs, invalid file IDs, and files that are still being synchronized are rejected.
 
 === Single File Deletion
 
@@ -229,9 +234,9 @@ import rajnishkmehta.sakshi.sdk.api.SakshiResult
 
 val deleteResult = client.deleteMedia("photo_2026_1001")
 if (deleteResult.isSuccess) {
-    println("Media deleted successfully!")
+    println("Media scheduled for deletion in 30 days")
 } else {
-    println("Failed to delete media: ${deleteResult.errorOrNull()?.message}")
+    println("Failed to schedule deletion: ${deleteResult.errorOrNull()?.message}")
 }
 ----
 
@@ -244,14 +249,54 @@ import rajnishkmehta.sakshi.sdk.api.SakshiResult
 val batchDeleteResult = client.deleteMedia(listOf("photo_1", "photo_2", "photo_invalid"))
 if (batchDeleteResult.isSuccess) {
     val response = batchDeleteResult.getOrNull()!!
-    println("Successfully deleted: ${response.successfulIds}")
-    println("Failed to delete: ${response.failedIds}")
+    println("Scheduled for deletion: ${response.successfulIds}")
+    println("Rejected: ${response.failedIds}")
 } else {
-    println("Batch deletion failed completely: ${batchDeleteResult.errorOrNull()?.message}")
+    println("Batch scheduling failed completely: ${batchDeleteResult.errorOrNull()?.message}")
 }
 ----
 
-== 12. Disconnecting
+== 12. Recovering Media
+
+Client applications can recover single or multiple media files that were previously scheduled for deletion. Vault restores the file to its valid state, preventing permanent deletion and making it visible in `listMedia` again.
+
+Rules enforced by Vault:
+
+* Requests for files that were never scheduled for deletion succeed without making any changes.
+* Unknown file IDs, invalid file IDs, and files that have already been permanently deleted are rejected.
+
+=== Single File Recovery
+
+[source,kotlin]
+----
+import rajnishkmehta.sakshi.sdk.api.SakshiResult
+
+val recoverResult = client.recoverMedia("photo_2026_1001")
+if (recoverResult.isSuccess) {
+    println("Media successfully recovered")
+} else {
+    println("Failed to recover media: ${recoverResult.errorOrNull()?.message}")
+}
+----
+
+=== Batch File Recovery
+
+[source,kotlin]
+----
+import rajnishkmehta.sakshi.sdk.api.SakshiResult
+
+val batchRecoverResult = client.recoverMedia(listOf("photo_1", "photo_2", "photo_invalid"))
+if (batchRecoverResult.isSuccess) {
+    val response = batchRecoverResult.getOrNull()!!
+    println("Successfully recovered: ${response.successfulIds}")
+    println("Rejected: ${response.failedIds}")
+} else {
+    println("Batch recovery failed completely: ${batchRecoverResult.errorOrNull()?.message}")
+}
+----
+
+
+== 13. Disconnecting
 
 When the client component is destroyed, disconnect the client to avoid memory leaks and unbind the service:
 
