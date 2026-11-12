@@ -5,7 +5,7 @@
 [![Release](https://img.shields.io/maven-central/v/io.github.rajnishkmehta.sakshi/sakshi-sdk?logo=apache-maven&style=flat-square)](https://central.sonatype.com/artifact/io.github.rajnishkmehta.sakshi/sakshi-sdk)
 [![API](https://img.shields.io/badge/API-29%2B-brightgreen.svg?style=plastic&logo=Android)](https://github.com/RajnishKMehta/Sakshi-SDK)
 [![License](https://img.shields.io/github/license/RajnishKMehta/Sakshi-SDK?style=flat-square&logo=Apache)](https://github.com/RajnishKMehta/Sakshi-SDK/raw/refs/heads/main/LICENSE)
-[![Docs](https://img.shields.io/badge/Docs-Sākṣī_Documentation-blue.svg?logo=gitbook)](https://github.com/RajnishKMehta/Sakshi-Docs)
+[![Docs](https://img.shields.io/badge/Docs-Sākṣī_Documentation-blue.svg?logo=gitbook)](https://sakshi-docs.gitbook.io/)
 
 </div>
 
@@ -28,6 +28,8 @@
 +------------------------------------+                 +-----------------------------------+
 ```
 
+[👉 Architecture Flow](https://github.com/RajnishKMehta/Sakshi-Docs/blob/main/developer-guide/concepts/api-architecture-flow.md)
+
 ### SDK Responsibilities
 
 - Inter-process communication bridge with Vault service.
@@ -47,11 +49,11 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0-RC.3")
+    implementation("io.github.rajnishkmehta.sakshi:sakshi-sdk:1.0.0")
 }
 ```
 
-> **Note**: A GitHub Packages distribution is also available. See the [Sākṣī Documentation](https://github.com/RajnishKMehta/Sakshi-Docs) for alternative setup instructions.
+> **Note**: A GitHub Packages distribution is also available. See the [Sākṣī Documentation](https://sakshi-docs.gitbook.io/space/developer-guide/sdk-integration/integration) for alternative setup instructions.
 
 ---
 
@@ -155,7 +157,7 @@ class SakshiVaultServiceBinder : ISakshiVaultService.Stub() {
 
 ## Documentation
 
-Detailed technical specifications and integration guides are available in the [Sākṣī Documentation Repository](https://github.com/RajnishKMehta/Sakshi-Docs).
+Detailed technical specifications and integration guides are available in the [Sākṣī Documentation](https://sakshi-docs.gitbook.io/space/developer-reference).
 
 ---
 
@@ -168,3 +170,23 @@ Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) and [C
 ## License
 
 This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Built by
+
+<p align="center">
+	<a href="https://sakshi-docs.gitbook.io/space/about/about-the-developer">
+		<img
+      src="https://avatars.githubusercontent.com/u/172272341?s=460"
+      alt="Rajnish Kumar"
+      width="175"
+      style="border-radius: 50%; object-fit: cover;"
+    />
+	</a>
+	<p align="center">
+		<a href="https://sakshi-docs.gitbook.io/space/about/about-the-developer">
+			<strong>Rajnish Kumar</strong>
+		</a>
+	</p>
+</p>
