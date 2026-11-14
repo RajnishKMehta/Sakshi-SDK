@@ -6,7 +6,7 @@ mockk = "1.14.11"
 kotlin = "2.4.21"
 coroutines = "1.11.0"
 androidx-core = "1.19.1"
-androidx-annotation = "1.10.0"
+androidx-annotation = "1.11.0"
 junit-jupiter = "6.1.3"
 junit-platform = "6.1.3"
 
